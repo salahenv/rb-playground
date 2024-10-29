@@ -1,13 +1,16 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Link } from 'react-router-dom';
 import Home from './Home';
+import LazyLoading from './LazyLoading';
+
+
 
 function App() {
   return (
     <div>
       <Routes>
         <Route path="/" element={<Home />} />
-        {/* <Route path="/contact" element={<Contact />} /> */}
+        <Route path="/lazy-loading" element={<LazyLoading />} />
       </Routes>
     </div>
   );

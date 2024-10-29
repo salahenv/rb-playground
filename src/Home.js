@@ -1,67 +1,25 @@
 import React from 'react';
-import MultiStepForm from './components/MutiStepForm';
+import { Link } from 'react-router-dom';
 
-const StepOne = ({formData, onChange}) => {
-  return (
-    <div>
-      <div>Name</div>
-      <input value = {formData.name} onChange={(e) => onChange('name', e)}></input>
-    </div>
-  )
-}
-
-const StepTwo = ({formData, onChange}) => {
-  return (
-    <div>
-      <div>Email</div>
-      <input value = {formData.email} onChange={(e) => onChange('email', e)}></input>
-    </div>
-  )
-}
-
-const StepThree = ({formData, onChange}) => {
-  return (
-    <div>
-      <div>Address</div>
-      <input value = {formData.address} onChange={(e) => onChange('address', e)}></input>
-    </div>
-  )
-}
-
-const steps = [
+const routes = [
   {
-    step: 0,
-    component: StepOne
+    label: 'Lazy Loading',
+    to: '/lazy-loading',
   },
   {
-    step: 1,
-    component: StepTwo
-  },
-  {
-    step: 2,
-    component: StepThree
+    label: 'demo 2',
+    to: '/lazy-loading',
   }
 ]
-
-const initialState = {
-  name: '',
-  email: '',
-  address: '',
-}
-
-const onSubmit = (formData) => {
-  console.log(formData);
-}
 
 function Home() {
   return (
     <div>
       <h1>Demo Page</h1>
-      <MultiStepForm 
-        initialState={initialState}
-        steps={steps}
-        onSubmit = {onSubmit}
-      />
+      {
+          // eslint-disable-next-line react/jsx-no-undef
+          routes.map(({label, to}) => <div style={{margin: '10px'}}><Link to = {to}>{label}</Link></div>)
+      }
     </div>
   );
 }
