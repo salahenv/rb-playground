@@ -1,6 +1,6 @@
 import React, { lazy, Suspense, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-const MutiStepForm = lazy(() => import('./components/MutiStepForm'));
+const MutiStepForm = lazy(() => import('./MutiStepForm'));
 
 const StepOne = ({formData, onChange}) => {
   return (

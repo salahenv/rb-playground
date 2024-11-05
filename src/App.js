@@ -1,7 +1,8 @@
 import React from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Home from './Home';
-import LazyLoading from './LazyLoading';
+import LazyLoading from './components/LazyLoading';
+import Store from './components/Store';
 
 
 
@@ -11,7 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/lazy-loading" element={<LazyLoading />} />
-        <Route path="/store" element={<LazyLoading />} />
+        <Route path="/store" element={<Store />} />
       </Routes>
     </div>
   );
