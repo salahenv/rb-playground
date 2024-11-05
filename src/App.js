@@ -2,7 +2,17 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Home from './Home';
 import LazyLoading from './components/LazyLoading';
-import Store from './components/Store';
+import { Store } from './Store';
+import StoreDemo from './components/StoreDemo';
+
+
+function StoreDemoWrapper() {
+  return (
+    <Store>
+      <StoreDemo/>
+    </Store>
+  )
+}
 
 
 
@@ -12,7 +22,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/lazy-loading" element={<LazyLoading />} />
-        <Route path="/store" element={<Store />} />
+        <Route path="/store" element={<StoreDemoWrapper />} />
       </Routes>
     </div>
   );
