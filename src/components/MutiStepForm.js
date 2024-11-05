@@ -24,6 +24,7 @@ function MultiStepForm({steps= [], initialState = {}, onSubmit}) {
 
     return (
         <div>
+            <div>Salah</div>
             <currentStep.component
                 onChange = {onChange}
                 formData = {formData}

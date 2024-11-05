@@ -59,7 +59,7 @@ function LazyLoading() {
   const [show, setShow] = useState(false);
   return (
     <div>
-      <h1 on>Lazy Loading</h1>
+      <h1>Lazy Loading component</h1>
       <button onClick = {() => setShow(true)}>Show</button>
       {
         show ? <Suspense fallback = {<div>Loading...</div>}>

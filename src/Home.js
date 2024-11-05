@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const routes = [
   {
-    label: 'Lazy Loading',
+    label: 'Lazy and Suspense',
     to: '/lazy-loading',
   },
   {
