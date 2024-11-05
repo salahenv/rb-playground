@@ -11,6 +11,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/lazy-loading" element={<LazyLoading />} />
+        <Route path="/store" element={<LazyLoading />} />
       </Routes>
     </div>
   );

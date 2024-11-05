@@ -7,8 +7,8 @@ const routes = [
     to: '/lazy-loading',
   },
   {
-    label: 'demo 2',
-    to: '/lazy-loading',
+    label: 'Store',
+    to: '/store',
   }
 ]
 
