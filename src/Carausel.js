@@ -9,6 +9,7 @@ const CaraouselPage = () => {
         autoplayInterval: 3000,
         infiniteScroll: true,
         transitionDuration: 500,
+        slidesToShow:1.5
       }}
     >
       <div className="bg-red-500 text-white text-center p-10">Slide 1</div>

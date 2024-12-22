@@ -6,6 +6,7 @@ const Carousel = ({ children, options = {} }) => {
     autoplayInterval = 3000,
     infiniteScroll = true,
     transitionDuration = 500,
+    slidesToShow = 1.5, // Number of slides visible at once, supports decimals for partial slides
   } = options;
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -13,6 +14,8 @@ const Carousel = ({ children, options = {} }) => {
   const intervalRef = useRef(null);
 
   const slideCount = children.length;
+
+  const slideWidthPercentage = 100 / slidesToShow; // Each slide's width as a percentage
 
   const goToSlide = (index) => {
     if (!infiniteScroll) {
@@ -44,43 +47,65 @@ const Carousel = ({ children, options = {} }) => {
 
   const handleTransitionEnd = () => setIsAnimating(false);
 
+  // Generate slides with cloned slides for infinite scrolling
+  const renderedSlides = infiniteScroll
+    ? [children[children.length - 1], ...children, children[0]]
+    : children;
+
   return (
     <div className="relative overflow-hidden w-full">
       {/* Slides */}
       <div
         className="flex transition-transform"
         style={{
-          transform: `translateX(-${currentIndex * 100}%)`,
+          transform: `translateX(-${currentIndex * slideWidthPercentage}%)`,
           transition: isAnimating ? `transform ${transitionDuration}ms ease` : 'none',
+          width: `${renderedSlides.length * slideWidthPercentage}%`,
         }}
         onTransitionEnd={handleTransitionEnd}
       >
-        {infiniteScroll
-          ? [children[children.length - 1], ...children, children[0]].map((child, index) => (
-              <div key={index} className="flex-shrink-0 w-full">
-                {child}
-              </div>
-            ))
-          : children.map((child, index) => (
-              <div key={index} className="flex-shrink-0 w-full">
-                {child}
-              </div>
-            ))}
+        {renderedSlides.map((child, index) => (
+          <div
+            key={index}
+            className="flex-shrink-0"
+            style={{
+              width: `${slideWidthPercentage}%`,
+            }}
+          >
+            {child}
+          </div>
+        ))}
       </div>
 
       {/* Buttons */}
-      <button
-        onClick={handlePrev}
-        className="absolute top-1/2 left-2 transform -translate-y-1/2 bg-black text-white px-3 py-1 rounded"
-      >
-        Prev
-      </button>
-      <button
-        onClick={handleNext}
-        className="absolute top-1/2 right-2 transform -translate-y-1/2 bg-black text-white px-3 py-1 rounded"
-      >
-        Next
-      </button>
+      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex items-center gap-4">
+        <button
+          onClick={handlePrev}
+          className="bg-black text-white px-3 py-1 rounded"
+        >
+          Prev
+        </button>
+
+        {/* Dot Indicators */}
+        <div className="flex items-center gap-2">
+          {children.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => goToSlide(index)}
+              className={`w-3 h-3 rounded-full ${
+                currentIndex === index ? 'bg-black' : 'bg-gray-400'
+              }`}
+            ></button>
+          ))}
+        </div>
+
+        <button
+          onClick={handleNext}
+          className="bg-black text-white px-3 py-1 rounded"
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 };
