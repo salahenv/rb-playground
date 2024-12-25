@@ -1,12 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { routes } from './routes';
 
 function Home() {
   return (
     <div>
-      <h1 className="text-3xl font-bold underline">
-        Hello world!
-      </h1>
+      {routes.map(route => <div><Link to = {route.link}>{route.name}</Link></div>)}
     </div>
   );
 }
