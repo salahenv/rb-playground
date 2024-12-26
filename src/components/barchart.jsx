@@ -1,36 +1,53 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 const data = [
     {
         team: 'A',
         ticket: 30,
+        className: 'bg-red-200'
     },
     {
         team: 'A',
         ticket: 40,
+        className: 'bg-green-200'
     },
     {
         team: 'A',
         ticket: 60,
+        className: 'bg-blue-200'
     }
 ]
 
 const Barchart = () => {
+    const [d, setD] = useState(data);
+    const [heights, setHeights] = useState([]);
+    useEffect(() => {
+        const maxTicket = Math.max(...data.map((d)=> d.ticket));
+        const heights = data.map(( d ) => Math.ceil((d.ticket / maxTicket) * 100));
+        setTimeout(() => {
+            setHeights(heights)
+        }, 100)
+    }, [])
+   
     return (
-        <div className='relative w-[80%] h-[500px]'>
-            <div className='w-full h-full pl-4 pb-4'>
-                <div className='h-full w-full flex border border-l-black border-b-black'>
+        
+        <div className='min-w-[300px] min-h-[250px] bg-cyan-100 pl-4 pb-4'>
+            <div className='bg-pink-100 h-full w-full border border-l-black border-b-black'>
+                <div className='h-full w-full flex flex-row justify-between items-end'>
                     {
-                        data.map(({ticket}) => {
+                        d.map(({ticket, className, calculatedHeight}, index) => {
+                          
                             return (
-                                <div className='bg-red'  style={{height: `${ticket}%`}}></div>
+                                <div className={`${className} px-2`} style={{
+                                    height: `${0 | heights[index]}%`,
+                                    transition: 'height 5s ease'
+                                }}></div>
                             )
                         })
                     }
                 </div>
             </div>
-            <div className='absolute top-[50%] rotate-[270deg] translate-x-[-50%]'>Total number of ticket</div>
-            <div className='absolute left-[50%] translate-y-[-50%]'>Teams</div>
+          
         </div>
     )
 }
