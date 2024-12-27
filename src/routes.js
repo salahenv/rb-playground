@@ -1,15 +1,9 @@
+import Chart from "./pages/Chart";
 const routes = [
     {
-        link: '/carousel',
-        name: 'Caraousel'
-    },
-    {
-        link: '/tik-toe',
-        name: 'Tik Toe'
-    },
-    {
-        link: '/barchart',
-        name: 'Barchart',
+        link: '/chart',
+        name: 'chart',
+        comp: <Chart />
     },
 ]
 

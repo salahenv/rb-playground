@@ -1,5 +1,5 @@
 
-import Carousel from "./components/carousel";
+import Carousel from "../components/carousel";
 
 export default function App() {
   const slides = [
