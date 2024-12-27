@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import './barchart.css';
 
 const Barchart = ({data}) => {
     const [heights, setHeights] = useState([]);
@@ -19,11 +20,12 @@ const Barchart = ({data}) => {
                         data.map((d, index) => {
                             return <div style={{
                                 height: heights[index]
-                            }} className='bg-red-100 w-4'></div>
+                            }} className={'group relative bar w-4 ' + d.className}>
+                                <div className='hidden absolute left-[-50%] top-[-20] text-white bg-black px-2 py-1 group-hover:block'>{d.team}-{d.ticket}</div>
+                            </div>
                         })
                     }
                 </div>
-                <div className='absolute top-[50%] translateX-[-50%] translateY-[-50%] rotate-[270deg]'>Ticket</div>
             </div>
            
         </div>
