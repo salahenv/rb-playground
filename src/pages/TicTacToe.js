@@ -1,7 +1,11 @@
 import TicTacToe from "../components/ticTacToe"
 
 const TicTocToePage = () => {
-    return <TicTacToe n={4}/>
+    return (
+        <div className="flex justify-center">
+            <TicTacToe n={5}/>
+        </div> 
+    )
 }
 
 export default TicTocToePage
