@@ -1,7 +1,7 @@
 import TicTacToe from "../components/ticTacToe"
 
 const TicTocToePage = () => {
-    return <TicTacToe n={3}/>
+    return <TicTacToe n={4}/>
 }
 
 export default TicTocToePage
