@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import '../components/css/file.css';
 
 const Node = (props) => {
     const [expanded, setExpanded] = useState(false);

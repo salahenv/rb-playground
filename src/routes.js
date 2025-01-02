@@ -1,4 +1,4 @@
-import Chart from "./pages/FileExp";
+import Chart from "./pages/Chart";
 import FileExplorer from "./pages/FileExp";
 import TicTocToePage from "./pages/TicTacToe";
 const routes = [

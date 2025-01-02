@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import './barchart.css';
 
 const Barchart = ({data}) => {
     const [heights, setHeights] = useState([]);
