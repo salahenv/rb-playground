@@ -1,97 +1,35 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { generateId } from '../Utils/generateId';
 
 const kanbanData = [
     {
+        id: 'todo',
         label: 'Todo',
         data: {
             items: [
                 {
                     taskId: 1,
-                    name: 'Task 1'
+                    name: 'Task'
                 },
                 {
                     taskId: 2,
-                    name: 'Task 2'
-                },
-                {
-                    taskId: 2,
-                    name: 'Task 3'
-                },
-                {
-                    taskId: 2,
-                    name: 'Task 4'
-                },
-                {
-                    taskId: 2,
-                    name: 'Task 5'
-                },
-                {
-                    taskId: 2,
-                    name: 'Task 6'
-                },
-                {
-                    taskId: 2,
-                    name: 'Task 7'
-                },
-                {
-                    taskId: 2,
-                    name: 'Task 8'
-                },
-                {
-                    taskId: 2,
-                    name: 'Task 9'
-                },
-                {
-                    taskId: 2,
-                    name: 'Task 10'
-                },
-                {
-                    taskId: 2,
-                    name: 'Task 11'
-                },
-                {
-                    taskId: 2,
-                    name: 'Task 12'
-                },
-                {
-                    taskId: 2,
-                    name: 'Task 13'
-                },
-                {
-                    taskId: 2,
-                    name: 'Task 14'
-                },
-                {
-                    taskId: 2,
-                    name: 'Task 15'
-                },
-                {
-                    taskId: 2,
-                    name: 'Task 16'
+                    name: 'Task'
                 }
             ]
         }
     },
     {
+        id: 'doing',
         label: 'Doing',
         data: {
-            items: [
-                {
-                    taskId: 3,
-                    name: 'Doing 1'
-                },
-            ]
+            items: []
         }
     },
     {
+        id: 'done',
         label: 'Done',
         data: {
-            items: [
-                {
-                    taskId: 3,
-                    name: 'Done 1'
-                },
-            ]
+            items: []
         }
     },
 ];
@@ -104,6 +42,66 @@ const getKanbanData = () => {
     })
 }
 
+const KanbanColumn = (props) => {
+
+    const {column, updateKanbanData} = props;
+    const [showInput, setShowInput] = useState(false);
+    const [taskName, setTaskName] = useState('');
+    const id = useRef(2);
+
+    const onTaskNameChange = (value) => {
+        setTaskName(value);
+    }
+    const onAddTask = () => {
+        const taskId = id.current + 1;
+        id.current = taskId;
+        column.data.items.push({
+            taskId: taskId,
+            name: taskName
+        });
+        updateKanbanData(column);
+        setTaskName('');
+        setShowInput(false);
+    }
+
+    return (
+        <div className='border border-gray-600 p-4 min-w-[200px] max-h-[100vh] overflow-y-scroll'>
+            <div>{column.label}</div>
+            <div>{
+                column.data.items.map((item) => {
+                    return (
+                        <div>
+                            <div className='bg-rose-100 p-2 mb-2'>
+                                <div>{item.name}-{item.taskId}</div>
+                            </div>
+                        </div>
+                        
+                    )
+                })
+            }</div>
+            {
+                showInput ? 
+                    <div>
+                        <input 
+                            className='p-2 border border-blue-600 rounded-md mb-1' 
+                            value = {taskName} 
+                            placeholder='task name'
+                            onChange = {(e) => onTaskNameChange(e.target.value)} 
+                        />
+                        <div 
+                            className='w-full border border-blue-600 p-2 text-center text-blue-600 rounded-md' 
+                            onClick={() => onAddTask()}>Add
+                        </div>
+                    </div> :
+                    <div 
+                        className='w-full border border-blue-600 p-2 text-center text-blue-600 rounded-md' 
+                        onClick={() => setShowInput(true)}>Add + 
+                    </div>
+            }
+        </div>
+    )
+}
+
 const KanbanBoard = () => {
 
     const [kanbanData, setKanbanData] = useState([]);
@@ -111,6 +109,12 @@ const KanbanBoard = () => {
     const getData = async () => {
         const data = await getKanbanData();
         setKanbanData(data);
+    }
+
+    const updateKanbanData = (column) => {
+        kanbanData.map((col) => {
+            return column.id === col.id ? column : col
+        })
     }
 
     useEffect(() => {
@@ -121,25 +125,8 @@ const KanbanBoard = () => {
         <div>
             <div className='flex gap-1'>
                 {
-                    kanbanData.map((column) => {
-                        return (
-                            <div className='border border-gray-600 p-4 min-w-[200px] max-h-[100vh] overflow-y-scroll'>
-                                <div>{column.label}</div>
-                                <div>{
-                                    column.data.items.map((item) => {
-                                        return (
-                                            <div>
-                                                <div className='bg-rose-100 p-2 mb-2'>
-                                                    <div>{item.name}</div>
-                                                </div>
-                                            </div>
-                                            
-                                        )
-                                    })
-                                }</div>
-                                <div className='w-full border border-blue-500 p-2 text-center'>Add + </div>
-                            </div>
-                        )
+                    kanbanData.map((column, index) => {
+                        return <KanbanColumn updateKanbanData = {updateKanbanData} key={index} column = {column}/>
                     })
                 }
             </div>
