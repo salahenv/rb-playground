@@ -3,7 +3,7 @@ import TicTacToe from "../components/ticTacToe"
 const TicTocToePage = () => {
     return (
         <div className="flex justify-center">
-            <TicTacToe n={5} playWithComputer = {true}/>
+            <TicTacToe n={3} playWithComputer = {true}/>
         </div> 
     )
 }

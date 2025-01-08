@@ -24,22 +24,93 @@ const TicTacToe = ({n, playWithCom = false}) => {
         setBoard(newBoard);
     }
 
-    const playComputerTurn = () => {
+    // const playComputerTurn = () => {
+    //     const possibleMoves = board.reduce((acco, row, ri) => {
+    //         const arr = row.reduce((acc, cell, ci) => {
+    //             if(!cell) {
+    //                 acc = [...acc, {ri, ci}];
+    //             }
+    //             return acc;
+    //         }, []);
+    //         return [...acco, ...arr]
+    //     },
+    //     []);
+    //     const randomNumber = Math.floor(Math.random() * possibleMoves.length);
+    //     const {ri, ci} = possibleMoves[randomNumber];
+    //     onCellClick(ri, ci);
+    //     // console.log(possibleMoves, randomNumber);
+    // }
+
+    const playComputerTurnForWin = () => {
         const possibleMoves = board.reduce((acco, row, ri) => {
             const arr = row.reduce((acc, cell, ci) => {
-                if(!cell) {
-                    acc = [...acc, {ri, ci}];
-                }
+                if (!cell) acc.push({ ri, ci });
                 return acc;
             }, []);
-            return [...acco, ...arr]
-        },
-        []);
+            return [...acco, ...arr];
+        }, []);
+    
+        // Helper function to evaluate a winning state for a player
+        const isWinningMove = (tempBoard, player) => {
+            // Check rows and columns
+            for (let i = 0; i < n; i++) {
+                const rowWin = tempBoard[i].every(cell => cell === player);
+                const colWin = tempBoard.every(row => row[i] === player);
+                if (rowWin || colWin) return true;
+            }
+            // Check diagonals
+            const mainDiagonalWin = tempBoard.every((row, i) => row[i] === player);
+            const antiDiagonalWin = tempBoard.every((row, i) => row[n - i - 1] === player);
+            return mainDiagonalWin || antiDiagonalWin;
+        };
+    
+        // Check for a winning move
+        for (const { ri, ci } of possibleMoves) {
+            const tempBoard = board.map(row => [...row]); // Clone the board
+            tempBoard[ri][ci] = 'O'; // Assume computer is 'O'
+            if (isWinningMove(tempBoard, 'O')) {
+                onCellClick(ri, ci);
+                return;
+            }
+        }
+    
+        // Check for a blocking move
+        for (const { ri, ci } of possibleMoves) {
+            const tempBoard = board.map(row => [...row]); // Clone the board
+            tempBoard[ri][ci] = 'X'; // Assume opponent is 'X'
+            if (isWinningMove(tempBoard, 'X')) {
+                onCellClick(ri, ci); // Block the opponent
+                return;
+            }
+        }
+    
+        // Fallback: Play the center if available
+        const center = Math.floor(n / 2);
+        if (!board[center][center]) {
+            onCellClick(center, center);
+            return;
+        }
+    
+        // Fallback: Play any corner if available
+        const corners = [
+            { ri: 0, ci: 0 },
+            { ri: 0, ci: n - 1 },
+            { ri: n - 1, ci: 0 },
+            { ri: n - 1, ci: n - 1 },
+        ];
+        for (const { ri, ci } of corners) {
+            if (!board[ri][ci]) {
+                onCellClick(ri, ci);
+                return;
+            }
+        }
+    
+        // Fallback: Play randomly
         const randomNumber = Math.floor(Math.random() * possibleMoves.length);
-        const {ri, ci} = possibleMoves[randomNumber];
+        const { ri, ci } = possibleMoves[randomNumber];
         onCellClick(ri, ci);
-        // console.log(possibleMoves, randomNumber);
-    }
+    };
+    
 
     const updateTurn = () => {
         turn === 'X' ? setTurn('O') : setTurn('X');
@@ -70,7 +141,7 @@ const TicTacToe = ({n, playWithCom = false}) => {
 
     useEffect(() => {
         if(turn === 'O') {
-            setTimeout(() => playComputerTurn(), 1000)
+            setTimeout(() => playComputerTurnForWin(), 1000)
         }
     }, [turn]);
 
