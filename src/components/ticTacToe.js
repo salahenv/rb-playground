@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-const TicTacToe = ({n}) => {
+const TicTacToe = ({n, playWithCom = false}) => {
     const array = Array(n).fill(null).map((row) => Array(n).fill(null));
 
     const [board, setBoard] = useState(array);
@@ -24,6 +24,23 @@ const TicTacToe = ({n}) => {
         setBoard(newBoard);
     }
 
+    const playComputerTurn = () => {
+        const possibleMoves = board.reduce((acco, row, ri) => {
+            const arr = row.reduce((acc, cell, ci) => {
+                if(!cell) {
+                    acc = [...acc, {ri, ci}];
+                }
+                return acc;
+            }, []);
+            return [...acco, ...arr]
+        },
+        []);
+        const randomNumber = Math.floor(Math.random() * possibleMoves.length);
+        const {ri, ci} = possibleMoves[randomNumber];
+        onCellClick(ri, ci);
+        // console.log(possibleMoves, randomNumber);
+    }
+
     const updateTurn = () => {
         turn === 'X' ? setTurn('O') : setTurn('X');
     }
@@ -34,6 +51,7 @@ const TicTacToe = ({n}) => {
         setWinner(null);
         setClickedIndex({ri: null, ci: null})
     }
+
 
     const evaluateGame = () => {
         const {ri, ci} = clickedIndex;
@@ -49,6 +67,12 @@ const TicTacToe = ({n}) => {
             updateTurn();
         } 
     }
+
+    useEffect(() => {
+        if(turn === 'O') {
+            setTimeout(() => playComputerTurn(), 1000)
+        }
+    }, [turn]);
 
     useEffect(() => {
         const {ri, ci} = clickedIndex;
