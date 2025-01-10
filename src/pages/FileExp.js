@@ -80,11 +80,8 @@ const FileExplorer = () => {
     return (
         <Fragment>
             <div className='flex'>
-                <div className='flex-1/4 bg-black h-full'>
+                <div className='flex-1/4 h-full'>
                     <File data = {data} />
-                </div>
-                <div className='flex-3/4 bg-white'>
-                    Nothing
                 </div>
             </div>
             
