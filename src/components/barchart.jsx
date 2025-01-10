@@ -17,11 +17,16 @@ const Barchart = ({data}) => {
                 <div className='flex items-end h-full justify-between border border-l-black border-b-black'>
                     {
                         data.map((d, index) => {
-                            return <div style={{
-                                height: heights[index]
-                            }} className={'group relative bar w-4 ' + d.className}>
-                                <div className='hidden absolute left-[-50%] top-[-20] text-white bg-black px-2 py-1 group-hover:block'>{d.team}-{d.ticket}</div>
-                            </div>
+                            return (
+                                <div 
+                                    style={{height: heights[index]}} 
+                                    className={'group relative transition-[height] bar w-4 ' + d.className}
+                                >
+                                    <div 
+                                        className='hidden absolute left-[-50%] top-[-20] text-white bg-black px-2 py-1 group-hover:block'
+                                    >{d.team}-{d.ticket}
+                                    </div>
+                            </div>)
                         })
                     }
                 </div>
