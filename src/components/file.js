@@ -44,12 +44,12 @@ const backendData = [
         {
           id: "7",
           name: "2017",
-          children: [
-            {
-              id: "13",
-              name: "Company Anniversary Celebration"
-            }
-          ]
+          // children: [
+          //   {
+          //     id: "13",
+          //     name: "Company Anniversary Celebration"
+          //   }
+          // ]
         }
       ]
     },
@@ -71,10 +71,8 @@ return new Promise(resolve => {
 
 const currentPageId = '10'
 
-const Node = (props) => {
-  
+const Folder = (props) => {
     const {info, exp} = props;
-    console.log('exp----', exp);
     const [expanded, setExpanded] = useState(exp);
 
     const toggleExpand = () => {
@@ -90,15 +88,13 @@ const Node = (props) => {
             {
                 expanded ? 
                 <div className="pl-4">
-                     <Nodes data = {info.children}></Nodes> 
+                     <File data = {info.children}></File> 
                 </div>
                 : null
             }
         </div>
     )
 }
-
-// check if file id === currentId
 
 const searchId = (data = {}) => {
     const found = data.id === currentPageId;
@@ -113,7 +109,7 @@ const searchId = (data = {}) => {
     return false;
 }
 
-const Nodes = (props) => {
+const File = (props) => {
     const {data} = props;
     return (
         <Fragment>
@@ -121,10 +117,10 @@ const Nodes = (props) => {
                 data.map((info, index) => {
                     const exp = searchId(info);
                     if(info.hasOwnProperty('children')) {
-                        return <Node exp = {exp} info = {info}/>
+                        return <Folder exp = {exp} info = {info}/>
                     } else {
                         return (
-                            <div className="flex">
+                            <div key = {index} className="flex">
                                 <div className="mr-2">•</div>
                                 <div className={info.id === currentPageId ? 'text-blue-700 font-semibold' : null}>{info.name}</div>
                             </div>
@@ -149,7 +145,7 @@ const BrowserRound = () => {
     }, []);
 
     return (
-        <Nodes data = {data}/>
+        <File data = {data}/>
     )
 }
 
