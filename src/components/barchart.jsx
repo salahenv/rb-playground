@@ -8,7 +8,10 @@ const Barchart = ({data}) => {
         const computedHeights = data.map((d) => {
             return `${Math.ceil((d.ticket/maxHeight)*100)}%`;
         })
-        setHeights(computedHeights);
+        setTimeout(() => {
+            setHeights(computedHeights);
+        }, 100);
+       
     }, [])
 
     return (
@@ -19,8 +22,10 @@ const Barchart = ({data}) => {
                         data.map((d, index) => {
                             return (
                                 <div 
-                                    style={{height: heights[index]}} 
-                                    className={'group relative transition-[height] bar w-4 ' + d.className}
+                                    style={{
+                                        height: heights[index] || "0%"
+                                    }} 
+                                    className={'group relative transition-height duration-1000 ease-in-out bar w-4 ' + d.className}
                                 >
                                     <div 
                                         className='hidden absolute left-[-50%] top-[-20] text-white bg-black px-2 py-1 group-hover:block'
