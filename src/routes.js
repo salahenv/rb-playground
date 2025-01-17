@@ -2,6 +2,8 @@ import Chart from "./pages/Chart";
 import FileExplorer from "./pages/FileExp";
 import KanbanPage from "./pages/Kanban";
 import TicTocToePage from "./pages/TicTacToe";
+import FeatureFlagPage from "./pages/FeatureFlag";
+import SnakeGamePage from "./pages/SnakeGame";
 const routes = [
     {
         link: '/chart',
@@ -22,6 +24,16 @@ const routes = [
         link: '/kanban',
         name: 'Kanban',
         comp: <KanbanPage />
+    },
+    {
+        link: '/feature-flag',
+        name: 'Feature Flag',
+        comp: <FeatureFlagPage />
+    },
+    {
+        link: '/snake-game',
+        name: 'Snake Game',
+        comp: <SnakeGamePage />
     },
 ]
 
